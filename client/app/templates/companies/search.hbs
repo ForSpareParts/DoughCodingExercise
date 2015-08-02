@@ -1,0 +1,9 @@
+<h3>Search results: {{query}}</h3>
+
+<ul>
+  {{#each model as |company|}}
+    <li>
+      {{#link-to 'company' company.id}}{{company.name}} ({{company.symbol}}){{/link-to}}
+    </li>
+  {{/each}}
+</ul>

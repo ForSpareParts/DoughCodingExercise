@@ -1,1 +1,18 @@
-{{outlet}}
+<h3>{{model.name}} ({{model.symbol}})</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Time</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each model.priceHistory as |stockPrice|}}
+      <tr>
+        <td>{{stockPrice.time}}</td>
+        <td>{{stockPrice.price}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

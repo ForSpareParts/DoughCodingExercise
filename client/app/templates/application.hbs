@@ -1,7 +1,8 @@
-<h2 id="title">{{#link-to 'index'}}Dough Coding Experience{{/link-to}}</h2>
+<div class="header">
+  <h2 id="title">{{#link-to 'index'}}Dough Coding Exercise{{/link-to}}</h2>
 
+  {{input name='search' placeholder='Search' value=searchQuery}}
+  <button {{action 'search' searchQuery}}>Search</button>
+</div>
 
-{{#each model as |company|}}
-  {{company.name}}
-{{/each}}
 {{outlet}}

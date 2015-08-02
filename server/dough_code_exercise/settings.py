@@ -106,5 +106,6 @@ STATIC_URL = '/static/'
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'base.filters.CoalesceFilterBackend',
-        'rest_framework.filters.DjangoFilterBackend',)
+        'rest_framework.filters.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter')
 }
