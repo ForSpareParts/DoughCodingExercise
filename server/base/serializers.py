@@ -5,7 +5,7 @@ from . import models
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Company
-        fields = ['id', 'name', 'price_history']
+        fields = ['id', 'name', 'symbol']
 
 class StockPriceSerializer(serializers.ModelSerializer):
     class Meta:
