@@ -10,6 +10,11 @@ from .models import Company
 
 # Create your views here.
 
+
+def mean_price(some_list):
+    return sum([float(item) for item in some_list])/len(some_list)
+
+
 def company_price_history(request, company_id):
     start_date = request.GET.get('start_date')
     if not start_date:
@@ -24,7 +29,10 @@ def company_price_history(request, company_id):
     history = share.get_historical(start_date, end_date)
 
     dates = [item['Date'] for item in history]
-    prices = [item['Close'] for item in history]
+    prices = [
+        mean_price([item['Open'], item['Close'], item['Low'], item['High']])
+        for item in history
+    ]
 
     return HttpResponse(
         json.dumps({'dates': dates, 'prices': prices}),

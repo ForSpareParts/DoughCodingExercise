@@ -1,25 +1,8 @@
 import Ember from 'ember';
-import DS from 'ember-data';
-
-import config from 'dough-code-exercise/config/environment';
 
 export default Ember.Controller.extend({
-  priceHistory: null,
-  priceHistoryObserver: function() {
-    var host = config.APP.API_HOST;
-    var namespace = config.APP.API_NAMESPACE;
-    var id = this.get('model.id');
-    var historyURL = (host + '/' + namespace + '/companies/' + id +
-      '/price-history/?start_date=2015-06-01');
 
-    var promise = new Ember.RSVP.Promise((resolve, reject) => {
-      Ember.$.getJSON(historyURL).then((response) => {
-        this.set('priceHistory', Ember.Object.create(response));
-      });
-    });
-
-    return new DS.PromiseObject({promise: promise});
-  }.observes('model.id'),
+  stockPrices: Ember.inject.service('stock-prices'),
 
   chartData: function() {
     if (!this.get('chartDataset') || !this.get('chartLabels')) {
@@ -48,4 +31,12 @@ export default Ember.Controller.extend({
       data: this.get('priceHistory.prices')
     };
   }.property('priceHistory.prices'),
+
+  priceHistory: null,
+  priceHistoryObserver: function() {
+    this.set('priceHistory', null);
+
+    return this.get('stockPrices').getPriceHistory(this.get('model.id'))
+    .then((priceHistory) => this.set('priceHistory', priceHistory));
+  }.observes('model.id'),
 });

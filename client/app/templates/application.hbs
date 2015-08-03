@@ -1,8 +1,18 @@
-<div class="header">
-  <h2 id="title">{{#link-to 'index'}}Dough Coding Exercise{{/link-to}}</h2>
+<nav>
+  <div class="container">
+    <div class="navbar-header">
+      {{#link-to 'index' class='navbar-brand'}}Dough Coding Exercise{{/link-to}}
+    </div>
 
-  {{input name='search' placeholder='Search' value=searchQuery}}
-  <button {{action 'search' searchQuery}}>Search</button>
+    <form class="search-box">
+      {{input name='search' placeholder='Search' value=searchQuery}}
+      <button {{action 'search' searchQuery}}>Search</button>
+    </form>
+  </div>
+</nav>
+
+<div class="main-content">
+  <div class="container">
+    {{outlet}}
+  </div>
 </div>
-
-{{outlet}}

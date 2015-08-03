@@ -1,0 +1,32 @@
+@import '../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/theme';
+@import '../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap';
+
+nav {
+  @extend .navbar;
+  @extend .navbar-inverse;
+  @extend .navbar-fixed-top;
+
+  .search-box {
+    @extend .navbar-form;
+    @extend .navbar-right;
+
+    input {
+      @extend .form-control;
+    }
+
+    button {
+      @extend .btn;
+      @extend .btn-default;
+    }
+  }
+}
+
+.main-content {
+  margin-top: $navbar-height;
+}
+
+.instructions, .please-wait {
+  @extend .lead;
+
+  margin-top: 50px;
+}

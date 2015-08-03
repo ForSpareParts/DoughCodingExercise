@@ -1,5 +1,7 @@
-<h3>{{model.name}} ({{model.symbol}})</h3>
+<h3>{{model.name}} ({{model.exchange}}:{{model.symbol}})</h3>
 
 {{#if chartData}}
   {{ember-chart type='Line' data=chartData width=800 height=600}}
+{{else}}
+  <div class="please-wait">Stock price history is loading</div>
 {{/if}}
