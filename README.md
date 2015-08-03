@@ -58,11 +58,13 @@ Running the Project
 -------------------
 
 In one terminal:
+
 1. `cd` to the `server` directory of the repository.
 2. `workon dough-coding-exercise`
 3. `./manage.py runserver`
 
 In another terminal:
+
 1. `cd` to the `client` directory of the repository.
 2. `ember s`
 
