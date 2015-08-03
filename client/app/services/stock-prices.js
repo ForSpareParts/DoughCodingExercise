@@ -4,6 +4,8 @@ import moment from 'moment';
 
 import config from 'dough-code-exercise/config/environment';
 
+/* global window */
+
 /**
  * Maintains a separate cache of price history data.
  *
@@ -24,8 +26,9 @@ export default Ember.Service.extend({
     }
 
     //if we already have a cached record, return that
-    if (this.get('priceHistoryCache.' + companyID)) {
-      return Ember.RSVP.resolve(this.get('priceHistoryCache.' + companyID));
+    var cached = this.getCachedHistory(companyID);
+    if (cached) {
+      return Ember.RSVP.resolve(Ember.Object.create(cached));
     }
 
     var host = config.APP.API_HOST;
@@ -36,13 +39,34 @@ export default Ember.Service.extend({
 
     return new Ember.RSVP.Promise((resolve, reject) => {
       Ember.$.getJSON(historyURL).then((response) => {
-        var obj = Ember.Object.create(response);
-        this.set('priceHistoryCache.' + companyID, obj);
-
-        resolve(obj);
+        this.setCachedHistory(companyID, response);
+        resolve(this.getCachedHistory(companyID));
       });
     });
   },
 
-  priceHistoryCache: Ember.Object.create()
+  priceHistoryCache: Ember.Object.create(),
+
+  getCachedHistory: function(companyID) {
+    var found = window.localStorage.getItem('' + companyID);
+    var timestamp = window.localStorage.getItem(companyID + '_time');
+
+    if (
+      found &&
+      timestamp &&
+      moment(timestamp) > moment().subtract(1, 'days')) {
+      return JSON.parse(found);
+    }
+
+    window.localStorage.setItem('' + companyID, undefined);
+    window.localStorage.setItem(companyID + '_time', undefined);
+  },
+
+  setCachedHistory: function(companyID, historyData) {
+    var timestamp = moment().format();
+    var historyJSON = JSON.stringify(historyData);
+
+    window.localStorage.setItem('' + companyID, historyJSON);
+    window.localStorage.setItem(companyID + '_time', timestamp);
+  }
 });
